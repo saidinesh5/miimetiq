@@ -1,0 +1,25 @@
+{
+  "name": "miimetiq",
+  "version": "0.0.1",
+  "description": "A thin wrapper over rabbitmq for Miimetiq nodes",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --check-leaks"
+  },
+  "keywords": [
+    "rabbitmq",
+    "miimetiq",
+    "rpc"
+  ],
+  "author": "Dinesh Manajipet <saidinesh5@gmail.com> (https://saidinesh5.wordpress.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^3.1.2"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.0",
+    "amqpuri": "^1.0.3",
+    "async": "^2.1.2",
+    "underscore": "^1.8.3"
+  }
+}

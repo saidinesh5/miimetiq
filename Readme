@@ -1,0 +1,21 @@
+Project components:
+
+MiimetiqService(options)
+  HOST ~ "api.miimetiq.local"
+  INSTANCE_NAME ~ "test_dg"
+  MODEL ~ "6-diesel_generator_schema"
+  USERNAME ~ `${MODEL}/${INSTANCE_NAME}`
+  PASSWORD ~ "anypass"
+  - connect([callback])
+  - getFeed(SignalParams, callback) //A simple fanout publisher
+  - disconnect()
+
+MiimetiqFeed(channel, params, exchange, bindingKey):
+  DEVICE_ID ~ "56090580e7e466125aa1c0a5"
+  INSTRUMENT ~ "generator"
+  WRITER ~ "power"
+  TYPE ~ "boolean"
+  BINDING_KEY ~ `miimetiq.ds.writer.${TYPE}.${MODEL}.${DEVICE_ID}.${INSTRUMENT}.${WRITER}`
+  - publish(data, [callback])
+  - subscribe(callback)
+  - terminate
