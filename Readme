@@ -1,6 +1,6 @@
 Project components:
 
-MiimetiqService(options)
+MiimetiqService(options) //Abstraction over RabbitMQ Connection
   HOST ~ "api.miimetiq.local"
   INSTANCE_NAME ~ "test_dg"
   MODEL ~ "6-diesel_generator_schema"
@@ -10,7 +10,7 @@ MiimetiqService(options)
   - getFeed(SignalParams, callback) //A simple fanout publisher
   - disconnect()
 
-MiimetiqFeed(channel, params, exchange, bindingKey):
+MiimetiqFeed(channel, params, exchange, bindingKey): //Abstraction over RabbitMQ channel+exchange+queue
   DEVICE_ID ~ "56090580e7e466125aa1c0a5"
   INSTRUMENT ~ "generator"
   WRITER ~ "power"
@@ -19,3 +19,21 @@ MiimetiqFeed(channel, params, exchange, bindingKey):
   - publish(data, [callback])
   - subscribe(callback)
   - terminate
+
+MiimetiqRPCServer(MiimetiqConnection, params) //How to ensure a singleton?
+  DEVICE_ID
+  INSTRUMENT
+  - start(procedures to expose) //start listening for incoming requests
+  - stop() //stop listening for incomiing requests
+
+MiimetiqRPCClient(MiimetiqConnection)
+  DEVICE_ID
+  INSTRUMENT
+  - connect(callback) // returns a list of functions that do RPC on the server
+  - isReady() // true when connection is established and the client knows about the remote procedures 
+  - disconnect() // disconnect from the server
+
+MiimetiqSeriaizer
+  - supportsDataType(dataType)
+  - pack(data, dataType)
+  - unpack(data, dataType)
