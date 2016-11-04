@@ -36,5 +36,10 @@ describe('MiimetiqSerializer' , function(){
       assert.equal(unpack(pack("hello", "string"), "string"), "hello");
     });
   });
-  
+
+  describe('unpack(pack(json))', function(){
+    it('unpack(pack({"hello":"world"}, "json"), "json")["hello"] = "world"', function(){
+      assert.equal(unpack(pack({"hello":"world"}, "json"), "json")["hello"], "world");
+    });
+  });
 });
