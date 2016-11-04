@@ -1,5 +1,9 @@
-const MiimetiqService = require('../index.js');
 const assert = require('assert');
+
+const MiimetiqService = require('../index.js');
+const MiimetiqRPCServer = require('../lib/MiimetiqRPCServer.js');
+const MiimetiqRPCClient = require('../lib/MiimetiqRPCClient.js');
+
 
 describe('MiimetiqService' , function(){
   describe('constructor', function(){
@@ -94,6 +98,46 @@ describe('MiimetiqService' , function(){
         });
       });
     });
+  });
+
+
+  describe('getRPCEndPoint', function(){
+    it('should return an instance of MiimetiqRPCServer bound to the deviceID:instrument', function(done){
+      let device = new MiimetiqService({
+        host: "localhost",
+        username: "guest",
+        password: "guest",
+        model: "diesel_generator"
+      });
+
+      device.connect(function(err, connection){
+        assert.equal(err, null);
+        device.getRPCEndPoint('server', {deviceId: '555', instrument: 'power_switch'}, function(err, endPoint){
+          assert.equal(err, null);
+          assert.ok(endPoint instanceof MiimetiqRPCServer);
+          done()
+        });
+      });
+    });
+
+    it('should return an instance of MiimetiqRPCServer bound to the deviceID:instrument', function(done){
+      let device = new MiimetiqService({
+        host: "localhost",
+        username: "guest",
+        password: "guest",
+        model: "diesel_generator"
+      });
+
+      device.connect(function(err, connection){
+        assert.equal(err, null);
+        device.getRPCEndPoint('client', {deviceId: '555', instrument: 'power_switch'}, function(err, endPoint){
+          assert.equal(err, null);
+          assert.ok(endPoint instanceof MiimetiqRPCClient);
+          done()
+        });
+      });
+    });
+
   });
 
 });

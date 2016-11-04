@@ -20,13 +20,13 @@ MiimetiqFeed(channel, params, exchange, bindingKey): //Abstraction over RabbitMQ
   - subscribe(callback)
   - terminate
 
-MiimetiqRPCServer(MiimetiqConnection, params) //How to ensure a singleton?
+MiimetiqRPCServer(channel, params, queueKey) //How to ensure a singleton?
   DEVICE_ID
   INSTRUMENT
   - start(procedures to expose) //start listening for incoming requests
   - stop() //stop listening for incomiing requests
 
-MiimetiqRPCClient(MiimetiqConnection)
+MiimetiqRPCClient(channel, params, queueKey)
   DEVICE_ID
   INSTRUMENT
   - connect(callback) // returns a list of functions that do RPC on the server
